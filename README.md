@@ -8,6 +8,9 @@
 
    可能有bug
 ```
+## 注意
+    不支持中文域名
+    不支持ipv6
 
 ## 如何使用
 
@@ -18,9 +21,161 @@
 2.png
 .cpp
 
-localhost
+# 非法, 正常 0-255
+http://192.168.1.256  
 
+# 非法，缺少端口号
+http://localhost:
+
+# 非法, 多了个.
+http://.example.com
+
+# 非法
+http://example..local
+
+# 非法, 虽然两个// 可以解析, 但是 /?query 好像没见到果这样的
+http://localhost:8080//?query=1
+
+# 非法
+http://localhost/path?=value
+
+# 算他合法因为有时候测试需要 ../../ 测试目录穿越
+http://localhost/..
+
+# 非法
+http://192.168.1.1:-80
+
+www.baidu.com:8080/queyr
+
+# 非法
+www.baidu.com:80801/queyr
+
+www.baidu.com:8080/?queyr
+
+# 非法
+www.baidu.com:80801/queyr
+
+127.0.0.1:8080
+
+# 非法
+127.0.0.1:89080
+
+http://192.168.5.10:808/queyr?
+
+localhost
+localhost/query
+localhost?index
 htt://www.baidu.com
+
+合法的域名
+example1.com
+example2.org
+test-site.net
+my-domain.info
+subdomain.example.com
+example123.co
+shop.example.us
+blog.example.io
+service.example.biz
+domain.example.aero
+mywebsite.coop
+example.travel
+webapp.example.name
+example.ac
+example.tech
+example.xyz
+example.cloud
+example.store
+example.pro
+myapp.example.me
+myportfolio.example.cc
+
+不合法的域名
+example-.com
+-website.com
+example..com
+example@domain.com
+example.com.
+site..example.com
+example..co.uk
+website..org
+example.123.com
+!example.com
+example#domain.com
+example%domain.com
+example&site.com
+example(1).com
+example*site.com
+example+domain.com
+example=site.com
+example?domain.com
+example/domain.com
+example:port.com
+example;site.com
+
+合法的 IP 地址
+192.168.0.1
+10.1.1.1
+172.31.255.255
+198.51.100.14
+203.0.113.76
+127.0.0.1
+192.0.2.1
+::1
+2001:db8::ff00:42:8329
+255.255.255.255
+
+不合法的 IP 地址
+192.168.300.1
+1234.567.89.0
+256.256.256.256
+192.168.1.1.1
+192.168..1
+10.0.0
+-10.0.0.1
+192.168.1.256
+0.0.0.0.0
+300.300.300.300
+999.999.999.999
+
+畸形 URL
+http://example.com/path?param=
+https://:80/path
+ftp://example.com//path
+http://example.com//path//
+http://example.com?query&=
+https://example.com#fragment#
+http://:80
+http:///example.com
+ftp://username:password@server:port/path
+http://example.com:port/
+
+畸形 IP
+192.168..1
+192.168.1.1.1
+1234.567.89.0
+192.168.-1.1
+0.0.0.256
+999.999.999.999
+300.300.300.300
+256.256.256.256
+-1.1.1.1
+172.16.0.0.1
+
+畸形域名
+example..com
+example!@#.com
+www.-example.com
+example.com.
+site..example.net
+example#site.com
+example%domain.com
+example@domain.com
+example^domain.com
+example&site.com
+example*domain.com
+
+
 
 http://www.google.com
 http://www.yahoo.com/
@@ -63,10 +218,10 @@ wwww.1.cc
 www.1.cc.com
 wwww.1.cc
 wwww.1.cc.
-
+ww.1.bc
+"""www".com.com""""
 ```
-
-### 功能一、URL 分类
+能一、URL 分类
 
 有两种输出模式:
 
