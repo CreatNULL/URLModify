@@ -226,40 +226,44 @@ ww.1.bc
 有两种输出模式:
 
 第一种:  将URL 分类到不同的列
+![image](https://github.com/user-attachments/assets/bbbbf82b-3045-459c-afbf-6e4520ca70d4)
 
-![image-20240930145833507](./image-20240930145833507.png)
+
 
 第二种: 将 URL 一行一行的分类
+![image](https://github.com/user-attachments/assets/cdd07ca0-8441-44db-a2fd-46484b19275f)
 
-![image-20240930145917734](./image-20240930145917734.png)
 
 ### 功能二、提取URL信息
 
 提取URL中的协议、端口等信息，如果本身没有携带对应信息，则同样是没有的，如果想有可使用添加端口，添加协议功能
+![image](https://github.com/user-attachments/assets/95eb8a74-b99a-4fbe-9e35-6090f973784e)
 
-<img src="./image-20240930150029784.png" alt="image-20240930150029784" style="zoom:50%;" />
 
 ### 功能三、添加端口
 
 给域名、URL、IP 添加端口，如果本身携带，则不添加，URL携带协议，则自动依据协议添加端口
 
-<img src="./image-20240930150242009.png" alt="image-20240930150242009" style="zoom:50%;" />
+![image](https://github.com/user-attachments/assets/6891927c-6c7a-4741-ac66-242d35d8add6)
+
 
 ### 功能四、添加协议
 
 同上，依据端口添加协议
+![image](https://github.com/user-attachments/assets/4d505463-3e18-4d65-8c57-36b2c4c75b54)
 
-<img src="./image-20240930150332824.png" alt="image-20240930150332824" style="zoom:50%;" />
 
 ### 功能五、去除空行 、空格
 
-<img src="./image-20240930150401555.png" alt="image-20240930150401555" style="zoom:50%;" />
+![image](https://github.com/user-attachments/assets/5f49e65b-d726-4444-89a5-0de2c5f83143)
+
 
 ### 功能六、出去两边的引号
 
 有时候复制下来说不定一行URL 左右两边会有 引号存在
 
-<img src="./image-20240930150648830.png" alt="image-20240930150648830" style="zoom:50%;" />
+![image](https://github.com/user-attachments/assets/5d8b9b47-a3e2-4381-9dcf-bbee0ab1e6ef)
+
 
 
 
@@ -267,41 +271,47 @@ ww.1.bc
 
 ##### 1. 控制输出是否去除空行
 
-![image-20240930150821457](./image-20240930150821457.png)
+![image](https://github.com/user-attachments/assets/8e08c391-7645-4270-827a-a17a63f4b806)
+
 
 ##### 2. 下载保存
 
-![image-20240930150854366](./image-20240930150854366.png)
+![image](https://github.com/user-attachments/assets/d24adf25-6bdd-4e39-a987-3ec73320b996)
+
 
 ##### 3. 如何复制一整列，点一下列标题，然后变成黄色后，在黄色处单机右键复制
 
-![image-20240930150914535](./image-20240930150914535.png)
+![image](https://github.com/user-attachments/assets/ef47296b-fe11-4c08-bd84-303c33ec95de)
+![image](https://github.com/user-attachments/assets/a8067590-2954-4aa2-877a-dc45bfc71de6)
 
-![image-20240930150949445](./image-20240930150949445.png)
 
 ##### 5.主题颜色不好看？想换？
 
 在这themes 下的 themes下添加自定义主题样式，默认提供了一个清新绿，一个像素（默认风格)
 
-![image-20240930151116096](./image-20240930151116096.png)
+![image](https://github.com/user-attachments/assets/1ad83286-7c2b-4a3d-b11c-4d1f6112c85a)
+
 
 在URLmodfiy_GUI.py 中 导入
 
-![image-20240930151207647](./image-20240930151207647.png)
+![image](https://github.com/user-attachments/assets/138155f2-6ddf-430c-acb1-dfe5df1664bd)
+
 
 换成导入的主题
 
-![image-20240930151301133](./image-20240930151301133.png)
+![image](https://github.com/user-attachments/assets/4c011342-1bb7-49ce-855d-418e340b9759)
+
 
 #### 6. 想要添加端口、添加协议时，更多的自动匹配？
 
 修改 modfiy ->urlmodfiy.py -> map 的 self.map_protocol_to_port 和 self.map_port_to_protocol
+![image](https://github.com/user-attachments/assets/dab7f66d-7a00-4574-bf5e-f27e1e040943)
 
-![image-20240930151422077](./image-20240930151422077.png)
 
 ##### 7. 去重
+![image](https://github.com/user-attachments/assets/6d815a47-5373-4c31-9bbe-09a805e3eaf7)
 
-![image-20240930204427335](./image-20240930204427335.png) 
+
 
 
 
