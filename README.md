@@ -312,6 +312,13 @@ ww.1.bc
 ![image](https://github.com/user-attachments/assets/6d815a47-5373-4c31-9bbe-09a805e3eaf7)
 
 
+## 使用示例
+如果数据量比较多，建议先复制到txt文本中，然后再复制到输入框中不然可能会有些卡
+先看看有没有不合法的域名
+![image](https://github.com/user-attachments/assets/3e3f7f5c-c9e3-4c18-9b82-b6549e59f464)
+可以看到，有些没有协议，再给它添加协议，勾选去重，去空行
+![image](https://github.com/user-attachments/assets/3e6941a5-8be8-4713-8e36-ef5870aae725)
+可以下载保存，也可以单独复制处理后的url
 
 ## 交个朋友吧
 备注：GitHub
