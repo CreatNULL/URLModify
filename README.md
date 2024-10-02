@@ -320,7 +320,4 @@ ww.1.bc
 ![image](https://github.com/user-attachments/assets/3e6941a5-8be8-4713-8e36-ef5870aae725)
 可以下载保存，也可以单独复制处理后的url
 
-## 交个朋友吧
-备注：GitHub
-![13f909da0b79b8341ff15a5ce5c194a](https://github.com/user-attachments/assets/ced7163d-0492-4850-a104-1dd703edcc8e)
 
