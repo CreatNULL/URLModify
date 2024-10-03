@@ -11,6 +11,10 @@
 ## 注意
     不支持中文域名
     不支持ipv6
+    对于不常见的域名，或者自定义的域名，误识别为非URL，因为脚本是搜集了wiki页面、腾讯页面、阿里页面的所有出现的顶级域名，对于其他的认为不合法的域名
+    解决方案:
+        找到 topdomain.py 文件中添加自定义的顶级域名
+        ![image](https://github.com/user-attachments/assets/a57cfe85-f610-42cb-91e0-c46fb0e5d1f6)
 
 ## 如何使用
 
