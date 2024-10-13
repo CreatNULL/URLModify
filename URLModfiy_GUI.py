@@ -5,11 +5,12 @@
 日期: 2024年9月30日
 """
 from PySide6.QtWidgets import QComboBox
+import re
 import sys
 import json
 from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QLabel, QTextEdit, QPushButton,
-    QTableWidget, QTableWidgetItem, QScrollArea, QHeaderView,
+    QTableWidget, QTableWidgetItem, QScrollArea, QHeaderView, QLineEdit,
     QGroupBox, QHBoxLayout, QMenu, QGridLayout, QCheckBox
 )
 from PySide6.QtWidgets import QFileDialog
@@ -23,11 +24,12 @@ from PySide6.QtWidgets import QRadioButton, QVBoxLayout
 # 实例化处理的类
 urlmodify = ModifyURL()
 
+
 class URLProcessorApp(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("URL 处理器 - 版本 1.0  By: CreateNULL")
-        self.setGeometry(100, 100, 900, 600)  # 增加窗口宽度
+        self.setGeometry(100, 100, 1100, 700)  # 增加窗口宽度
         self.setStyleSheet(Pixel_Graph)
 
         # 主布局
@@ -103,6 +105,13 @@ class URLProcessorApp(QWidget):
 
         # 设置下拉框的样式
         self.order_combobox.setStyleSheet("padding: 5px; font-size: 14px;")
+        # --------------- 正则过滤 ------------
+        # 新增正则表达式输入框
+        self.regex_label = QLabel("输入正则过滤规则:")
+        self.regex_input = QLineEdit()
+        self.regex_input.setPlaceholderText("请输入正则表达式进行过滤")
+        left_layout.addWidget(self.regex_label)
+        left_layout.addWidget(self.regex_input)
 
         # 添加到左侧布局
         left_layout.addWidget(self.order_label)
@@ -182,7 +191,10 @@ class URLProcessorApp(QWidget):
         # 判断是否需要去重
         deduplicate = self.deduplicate_check.isChecked()
 
-        result = urlmodify.filter(urls=urls, original_order=original_order, no_empty=filter_empty_lines, deduplicate=deduplicate)
+        # 获取正则表达式并应用过滤
+        regex = self.regex_input.text()
+
+        result = urlmodify.filter(urls=urls, original_order=original_order, no_empty=filter_empty_lines, deduplicate=deduplicate, regular=regex)
 
         titles = ['域名-严格模式', '域名-宽松模式', 'IP-严格模式', 'IP-宽松模式', 'URL', '其他字符']
         self.output_table.setColumnCount(len(titles))
@@ -226,8 +238,13 @@ class URLProcessorApp(QWidget):
         # 判断是否需要去重
         deduplicate = self.deduplicate_check.isChecked()
 
+        # 获取正则表达式并应用过滤
+        regex = self.regex_input.text()
+        # 获取正则表达式并应用过滤
+        regex = self.regex_input.text()
+
         # 处理提取信息
-        result = urlmodify.extract_infos(urls=urls, no_empty=filter_empty_lines, deduplicate=deduplicate)
+        result = urlmodify.extract_infos(urls=urls, no_empty=filter_empty_lines, deduplicate=deduplicate, regular=regex)
 
         # 设置标题
         titles = ['原始URL', '协议', '域名', 'IP', '端口', '路径', '参数', '非域名/非IP']
@@ -276,8 +293,11 @@ class URLProcessorApp(QWidget):
         # 判断是否需要去重
         deduplicate = self.deduplicate_check.isChecked()
 
+        # 获取正则表达式并应用过滤
+        regex = self.regex_input.text()
+
         # 添加端口
-        result = urlmodify.add_port(urls=urls, no_empty=filter_empty_lines, deduplicate=deduplicate)
+        result = urlmodify.add_port(urls=urls, no_empty=filter_empty_lines, deduplicate=deduplicate, regular=regex)
 
         if not result:
             return
@@ -318,8 +338,11 @@ class URLProcessorApp(QWidget):
         # 判断是否需要去重
         deduplicate = self.deduplicate_check.isChecked()
 
+        # 获取正则表达式并应用过滤
+        regex = self.regex_input.text()
+
         # 添加协议
-        result = urlmodify.add_protocol(urls=urls, no_empty=filter_empty_lines, deduplicate=deduplicate)  # 调用处理方法添加协议
+        result = urlmodify.add_protocol(urls=urls, no_empty=filter_empty_lines, deduplicate=deduplicate, regular=regex)  # 调用处理方法添加协议
 
         if not result:
             return
@@ -355,7 +378,11 @@ class URLProcessorApp(QWidget):
         deduplicate = self.deduplicate_check.isChecked()
 
         urls = urls.split("\n")  # 按换行符拆分输入的 URL
-        result = urlmodify.remove_quotation_marks(urls=urls, no_empty=filter_empty_lines, deduplicate=deduplicate)  # 调用处理方法去除引号
+
+        # 获取正则表达式并应用过滤
+        regex = self.regex_input.text()
+
+        result = urlmodify.remove_quotation_marks(urls=urls, no_empty=filter_empty_lines, deduplicate=deduplicate, regular=regex)  # 调用处理方法去除引号
 
         if not result:
             return
@@ -390,7 +417,10 @@ class URLProcessorApp(QWidget):
         # 判断是否需要去重
         deduplicate = self.deduplicate_check.isChecked()
 
-        result = urlmodify.remove_blank_space(urls=urls, deduplicate=deduplicate)  # 调用处理方法删除空行和空格
+        # 获取正则表达式并应用过滤
+        regex = self.regex_input.text()
+
+        result = urlmodify.remove_blank_space(urls=urls, deduplicate=deduplicate, regular=regex)  # 调用处理方法删除空行和空格
 
         if not result:
             return

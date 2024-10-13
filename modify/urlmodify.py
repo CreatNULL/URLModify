@@ -224,13 +224,14 @@ class ModifyURL:
 
     # 对 GUI 开放的接口
     # 过滤
-    def filter(self, urls: list, original_order: bool = True, no_empty: bool = False, deduplicate: bool = False) -> list:
+    def filter(self, urls: list, original_order: bool = True, no_empty: bool = False, deduplicate: bool = False, regular: str = None) -> list:
         """
 
         :param urls: 需要过滤的 url 列表
         :param original_order 排序的模式， True, 按照原始顺序，然后分到对应行，False, 先分类，然后输出到对应的类型下
         :param no_empty: 是否去除空行
         :param deduplicate: 去重
+        :param regular: 正则过滤的规则
         :return:
             [{
                 "domain_strict": domain_strict_list,    # 域名严格模式，仅仅匹配域名
@@ -245,6 +246,9 @@ class ModifyURL:
         if type(urls) is not list:
             raise ValueError(f"参数 urls 类型错, 应当为 <class 'list'>, 而不是 {type(urls)}")
 
+        if type(regular) is not str and regular is not None:
+            raise ValueError(f"参数 regular 类型错误, 应当为 <class 'str'>, 而不是 {type(regular)}")
+
         # 过滤后的结果
         filtered_urls = {"domain_strict": [], "domain_lenient": [], "ip_strict": [], "ip_lenient": [], "url": [],
                          "other": []}
@@ -253,9 +257,11 @@ class ModifyURL:
         if deduplicate:
             urls = list(set(urls))
 
+        if regular is not None and regular.strip() != '':
+            urls = [url for url in urls if not re.findall(regular, url)]
+
         if original_order:
             for url in urls:
-
                 if no_empty:
                     if not url.strip():
                         continue
@@ -307,6 +313,9 @@ class ModifyURL:
             return original_order_list
         else:
             for url in urls:
+                if no_empty:
+                    if not url.strip():
+                        continue
                 if self.is_domain_strict_mode(domain=url):
                     filtered_urls["domain_strict"].append(url)
                 elif self.is_ip_address_strict_mode(ip=url):
@@ -323,17 +332,20 @@ class ModifyURL:
 
     # 删除引号
     @staticmethod
-    def remove_quotation_marks(urls: list, no_empty: bool = False, deduplicate: bool = False) -> list:
+    def remove_quotation_marks(urls: list, no_empty: bool = False, deduplicate: bool = False, regular: str = None) -> list:
         """ 删除 URL开头的单引号，双引号
 
         :param urls: 需要处理的 URLS 列表
         :param no_empty: 跳过为空的
         :param deduplicate: 去重
+        :param regular: 正则过滤
         :return: [{'original': 原始的字符串, 'derivative': 去除引号后的]
         """
 
         if type(urls) is not list:
             raise ValueError(f"参数 urls 类型错, 应当为 <class 'list'>, 而不是 {type(urls)}")
+        if type(regular) is not str and regular is not None:
+            raise ValueError(f"参数 regular 类型错误, 应当为 <class 'str'>, 而不是 {type(regular)}")
 
         if deduplicate:
             urls = list(set(urls))
@@ -347,21 +359,27 @@ class ModifyURL:
 
     # 删除一行的空白区域 删除空白行(可选)
     @staticmethod
-    def remove_blank_space(urls: list, remove_blank_line: bool = True, deduplicate: bool = False) -> list:
+    def remove_blank_space(urls: list, remove_blank_line: bool = True, deduplicate: bool = False, regular: str = None) -> list:
         """ 删除 URL 开头末尾的空格
 
         :param urls: 需要处理的 URLS 列表
         :param remove_blank_line: 对于空白行的处理，是否删除
         :param deduplicate: 去重
+        :param regular: 正则过滤
         :return: [{'original': 原始的字符串, 'derivative': 处理后删除空行，空格的字符串}]
         """
         result = []
 
         if type(urls) is not list:
             raise ValueError(f"参数 urls 类型错, 应当为 <class 'list'>, 而不是 {type(urls)}")
+        if type(regular) is not str and regular is not None:
+            raise ValueError(f"参数 regular 类型错误, 应当为 <class 'str'>, 而不是 {type(regular)}")
 
         if deduplicate:
             urls = list(set(urls))
+
+        if regular is not None and regular.strip() != '':
+            urls = [url for url in urls if not re.findall(regular, url)]
 
         for url in urls:
             if url:
@@ -485,12 +503,13 @@ class ModifyURL:
         tld_set = {tld['domain'] for tld in TOP_DOMAIN}
         return target_tld in tld_set
 
-    def extract_infos(self, urls: list, no_empty: bool = False, deduplicate: bool = False) -> [dict]:
+    def extract_infos(self, urls: list, no_empty: bool = False, deduplicate: bool = False, regular: str = None) -> [dict]:
         """ 从给出的列表字符串中提取可能的端口, 返回字典列表, 字典内容为 原始的字符串，提取的协议, 提取的域名, 提取的 ip, 提取的端口, 提取的参数和路径, 是否提取了东西
 
         :param urls:
         :param no_empty: 跳过为空的
         :param deduplicate: 去重
+        :param regular: 正则过滤
         :returns: [{'original': '原始的字符串', 'protocol': '', 'domain': '', 'ip':'', 'port':'', 'path': '', 'params': {}, 'is_other': True}]
         """
 
@@ -498,9 +517,14 @@ class ModifyURL:
 
         if type(urls) is not list:
             raise ValueError(f"参数 urls 类型错, 应当为 <class 'list'>, 而不是 {type(urls)}")
+        if type(regular) is not str and regular is not None:
+            raise ValueError(f"参数 regular 类型错误, 应当为 <class 'str'>, 而不是 {type(regular)}")
 
         if deduplicate:
             urls = list(set(urls))
+
+        if regular is not None and regular.strip() != '':
+            urls = [url for url in urls if not re.findall(regular, url)]
 
         for url in urls:
             if no_empty:
@@ -564,17 +588,23 @@ class ModifyURL:
 
         return result
 
-    def add_port(self, urls: list, no_empty: bool = False, deduplicate: bool = False) -> list:
+    def add_port(self, urls: list, no_empty: bool = False, deduplicate: bool = False, regular: str = None) -> list:
         """ 添加端口, 返回字典列表 [{'original': 原始的字符串, 'derivative': 处理后添加端口的字符串}]
 
         :param urls:
         :param no_empty: 跳过为空的
         :param deduplicate: 去重
+        :param regular: 正则过滤
         :return: [{'original': 原始的字符串, 'derivative': 处理后添加端口的字符串}]
         """
 
         if deduplicate:
             urls = list(set(urls))
+        if type(regular) is not str and regular is not None:
+            raise ValueError(f"参数 regular 类型错误, 应当为 <class 'str'>, 而不是 {type(regular)}")
+
+        if regular is not None and regular.strip() != '':
+            urls = [url for url in urls if not re.findall(regular, url)]
 
         result = []
         default_add = ':80'
@@ -654,14 +684,20 @@ class ModifyURL:
 
         return result
 
-    def add_protocol(self, urls: list, no_empty: bool = False, deduplicate: bool = False) -> list:
+    def add_protocol(self, urls: list, no_empty: bool = False, deduplicate: bool = False, regular: str = None) -> list:
         """ 添加协议, 返回字典列表 [{'original': 原始的字符串, 'derivative': 处理后添加协议的字符串}] """
 
         result = []
         default_protocol = 'http://'
 
+        if type(regular) is not str and regular is not None:
+            raise ValueError(f"参数 regular 类型错误, 应当为 <class 'str'>, 而不是 {type(regular)}")
+
         if deduplicate:
             urls = list(set(urls))
+
+        if regular is not None and regular.strip() != '':
+            urls = [url for url in urls if not re.findall(regular, url)]
 
         for url in urls:
             if no_empty:
