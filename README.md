@@ -12,9 +12,6 @@
     不支持中文域名
     不支持ipv6
     对于不常见的域名，或者自定义的域名，误识别为非URL，因为脚本是搜集了wiki页面、腾讯页面、阿里页面的所有出现的顶级域名，对于其他的认为不合法的域名
-    解决方案:
-        找到 topdomain.py 文件中添加自定义的顶级域名
-![image](https://github.com/user-attachments/assets/a57cfe85-f610-42cb-91e0-c46fb0e5d1f6)
 
 ## 如何使用
 
@@ -225,7 +222,7 @@ wwww.1.cc.
 ww.1.bc
 """www".com.com""""
 ```
-能一、URL 分类
+### 功能一、URL 分类
 
 有两种输出模式:
 
@@ -268,6 +265,7 @@ ww.1.bc
 
 ![image](https://github.com/user-attachments/assets/5d8b9b47-a3e2-4381-9dcf-bbee0ab1e6ef)
 
+### 功能七、正则过滤输入
 
 
 
@@ -289,30 +287,7 @@ ww.1.bc
 ![image](https://github.com/user-attachments/assets/a8067590-2954-4aa2-877a-dc45bfc71de6)
 
 
-##### 5.主题颜色不好看？想换？
-
-在这themes 下的 themes下添加自定义主题样式，默认提供了一个清新绿，一个像素（默认风格)
-
-![image](https://github.com/user-attachments/assets/1ad83286-7c2b-4a3d-b11c-4d1f6112c85a)
-
-
-在URLmodfiy_GUI.py 中 导入
-
-![image](https://github.com/user-attachments/assets/138155f2-6ddf-430c-acb1-dfe5df1664bd)
-
-
-换成导入的主题
-
-![image](https://github.com/user-attachments/assets/4c011342-1bb7-49ce-855d-418e340b9759)
-
-
-#### 6. 想要添加端口、添加协议时，更多的自动匹配？
-
-修改 modfiy ->urlmodfiy.py -> map 的 self.map_protocol_to_port 和 self.map_port_to_protocol
-![image](https://github.com/user-attachments/assets/dab7f66d-7a00-4574-bf5e-f27e1e040943)
-
-
-##### 7. 去重
+##### 4. 去重
 ![image](https://github.com/user-attachments/assets/6d815a47-5373-4c31-9bbe-09a805e3eaf7)
 
 
